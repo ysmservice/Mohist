@@ -22,7 +22,7 @@ import java.util.Objects;
 import java.util.Properties;
 
 public class Main {
-    static final boolean DEBUG = Boolean.getBoolean("bss.debug");
+    static final boolean DEBUG = true;//Boolean.getBoolean("bss.debug");
     public static List<URL> urls = new ArrayList<>();
     public static void main(String[] args) throws Exception {
         // Mohist start
@@ -68,11 +68,13 @@ public class Main {
                     System.out.println("Missing required library: " + entry.path);
                     failed = true;
                 }
-                classpath.append(File.pathSeparator).append(target.getAbsolutePath());
-                URL url = target.toURI().toURL();
-                if (DEBUG)
-                    System.out.println(url);
-                urls.add(url);
+                if (!target.getAbsolutePath().contains("netty-common") && !target.getAbsolutePath().contains("netty-buffer")) {
+                	classpath.append(File.pathSeparator).append(target.getAbsolutePath());
+                    URL url = target.toURI().toURL();
+                    if (DEBUG)
+                        System.out.println(url);
+                    urls.add(url);
+                }
                 line = reader.readLine();
             }
         }

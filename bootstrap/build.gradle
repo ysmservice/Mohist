@@ -16,6 +16,7 @@ configurations {
 repositories {
     mavenCentral()
     maven { url 'https://maven.mohistmc.com/' }
+    maven {url 'https://repo.opencollab.dev/main'}
 }
 
 dependencies {

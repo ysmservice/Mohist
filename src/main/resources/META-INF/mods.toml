@@ -23,3 +23,21 @@ license="LGPL v2.1"
     description='''
     Mohist, a server of bukkit and forge
     '''
+
+[[mods]]
+    modId="geyser_neoforge"
+    version="1.20.4"
+    displayName="Geyser"
+    authors="Geyser"
+    description='''
+    Geyser
+    '''
+
+[[mods]]
+    modId="floodgate"
+    version="1.20.4"
+    displayName="Geyser-floodgate"
+    authors="Geyser-floodgate"
+    description='''
+    Geyser-floodgate
+    '''

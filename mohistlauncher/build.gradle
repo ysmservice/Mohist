@@ -9,6 +9,7 @@ repositories {
     mavenCentral()
     maven { url 'https://maven.minecraftforge.net/' }
     maven { url 'https://maven.mohistmc.com/' }
+    maven {url 'https://repo.opencollab.dev/main'}
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -20,7 +21,6 @@ dependencies {
     compileOnly 'org.jetbrains:annotations:23.0.0'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
     compileOnly 'org.projectlombok:lombok:1.18.30'
-
     implementation(libs.yaml)
     implementation(libs.i18n)
     implementation(libs.json)

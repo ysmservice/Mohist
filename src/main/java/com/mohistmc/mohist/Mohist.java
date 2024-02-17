@@ -1,5 +1,6 @@
 package com.mohistmc.mohist;
-
+import org.geysermc.geyser.platform.neoforge.GeyserNeoforgeBootstrap;
+import org.geysermc.floodgate.ForgeMod;
 import com.mohistmc.mohist.eventhandler.EventDispatcherRegistry;
 import com.mohistmc.i18n.i18n;
 import com.mohistmc.mohist.plugins.MohistProxySelector;

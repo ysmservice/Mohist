@@ -23,6 +23,9 @@ plugins {
     id 'net.minecraftforge.gradleutils'
     id 'net.minecraftforge.gradle.patcher'
     id 'net.minecraftforge.gradlejarsigner'
+id 'com.github.johnrengelman.shadow' version '8.1.1'
+//id 'com.google.inject' version '4.2.3' 
+  id 'java'
 }
 
 Util.init() //Init all our extension methods!
@@ -132,10 +135,38 @@ dependencies {
     installer 'commons-lang:commons-lang:2.6-mohist'
     // Paper start
     installer(libs.bundles.log4j)
-    installer(libs.bundles.adventure)
+    //installer(libs.bundles.adventure)
     // Paper end
+    implementation('org.geysermc.geyser:api:2.2.0-SNAPSHOT'){
+    }
+    //compileOnly fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'org.cloudburstmc.math:api:2.0'
+    implementation 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+    //installer 'com.google.code.gson:gson:2.10.1'
+    //installer 'com.google.guava:guava:32.1.2-jre'
+    implementation files("libs/core.jar")
+	implementation("org.geysermc.floodgate:core:${project.mod_version}") {
+    exclude group: 'com.google.code.gson'
+    exclude group: 'com.google.guava'
+    exclude group: 'net.kyori.adventure'
+    exclude group: 'net.kyori.adventure.text.serializer.gson'
+    exclude group: 'net.kyori.adventure.text.serializer.gson'
+    exclude group: 'io.netty.common'
+    transitive = false
+    
+	}
+    
+    
+        implementation 'com.google.inject:guice:5.1.0'
+        annotationProcessor 'com.google.inject:guice:5.0.1'
+        
 }
+configurations.runtimeClasspath {
+exclude group: 'io.netty'
 
+
+}
 patcher {
     excs.from file("$rootDir/src/main/resources/forge.exc")
     parent = project(':mcp')
@@ -580,7 +611,52 @@ tasks.named('universalJar').configure {
     from(EXTRA_TXTS)
     duplicatesStrategy = 'exclude'
     exclude '.cache'
-
+    from(zipTree('libs/core.jar')){
+    	exclude 'org/slf4j/**'
+        exclude 'io/netty/**'
+        exclude 'com/google/gson/**'
+        exclude 'com/google/common/**'
+        exclude 'it/unimi/dsi/**'
+        //exclude 'net/kyori/**'
+        exclude 'it/unimi/**'
+        exclude 'net/jodah/**'
+        
+    }
+    from(zipTree('libs/flcore.jar')){
+    	exclude 'org/slf4j/**'
+        exclude 'io/netty/**'
+        exclude 'com/google/gson/**'
+        exclude 'com/google/common/**'
+        exclude 'it/unimi/dsi/**'
+        exclude 'net/kyori/**'
+        exclude 'it/unimi/**'
+        exclude 'net/jodah/**'
+        exclude 'com/sun/**'
+        exclude 'javax/lang/**'
+        exclude 'javax/annotation/**'
+        exclude 'javax/tools/**'
+        
+    }
+    from(zipTree('libs/netty-common.jar')){
+    	exclude 'org/slf4j/**'
+        exclude 'com/google/gson/**'
+        exclude 'com/google/common/**'
+        exclude 'it/unimi/dsi/**'
+        exclude 'net/kyori/**'
+        exclude 'it/unimi/**'
+        exclude 'net/jodah/**'
+        
+    }
+    from(zipTree('libs/netty-buffer.jar')){
+    	exclude 'org/slf4j/**'
+        exclude 'com/google/gson/**'
+        exclude 'com/google/common/**'
+        exclude 'it/unimi/dsi/**'
+        exclude 'net/kyori/**'
+        exclude 'it/unimi/**'
+        exclude 'net/jodah/**'
+        
+    }
     manifest {
         attributes([
                 'Specification-Title'   : 'Forge',
@@ -615,6 +691,11 @@ tasks.named('universalJar').configure {
                 'Implementation-Vendor' : 'SpigotMC'
         ] as LinkedHashMap, 'org/bukkit/craftbukkit/v1_20_R3/')
     }
+    exclude '**/com/google/code/gson/**'
+    exclude '**/com/google/guava/**'
+    exclude '**/com/google/thirdparty/**'
+    //exclude '**/net/kyori/adventure/**'
+    exclude '**/net/kyori/adventure/text/serializer/gson/**'
     jarSigner.sign(it)
 }
 
@@ -695,5 +776,7 @@ task mohistJar(type: Jar, dependsOn: [genServerBinPatches, project(':bootstrap')
 tasks.register('genAllData') {
     dependsOn 'forge_data'
 }
-
+tasks.named("compileJava") {
+        dependsOn(tasks.named("extractMapped"))
+}
 apply from: rootProject.file('build_forge_eclipse.gradle')
