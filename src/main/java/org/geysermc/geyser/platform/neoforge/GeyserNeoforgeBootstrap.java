@@ -37,6 +37,7 @@ import net.minecraftforge.event.server.ServerStoppingEvent;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.geysermc.geyser.platform.mod.GeyserModBootstrap;
 import org.geysermc.geyser.platform.mod.GeyserModUpdateListener;
+import org.geysermc.geyser.platform.mod.mixin.client.IntegratedServerMixin;
 
 @Mod(ModConstants.MOD_ID)
 public class GeyserNeoforgeBootstrap extends GeyserModBootstrap {

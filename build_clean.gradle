@@ -55,7 +55,9 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
     options.warnings = false // Shutup deprecated for removal warnings
 }
-
+tasks.named("compileJava") {
+        dependsOn(tasks.named("extractMapped"))
+}
 eclipse.classpath.file.whenMerged {
 	// Disable optional warnings on the minecraft decompiled source code. It just muddies the warning window and hides warnings in our own codebase
 	def src = entries.find { it.path == 'src/main/java' }

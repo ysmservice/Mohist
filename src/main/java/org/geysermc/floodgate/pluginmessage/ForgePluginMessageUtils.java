@@ -58,5 +58,17 @@ public class ForgePluginMessageUtils extends PluginMessageUtils {
             buffer.writeBytes(dataBuffer);
             return buffer;
         }
+        
+        public static void encode(PluginMessagePacket packet, FriendlyByteBuf buf) {
+            buf.writeResourceLocation(packet.resource);
+            buf.writeBytes(packet.dataBuffer);
+        }
+
+        public static PluginMessagePacket decode(FriendlyByteBuf buf) {
+            ResourceLocation resource = buf.readResourceLocation();
+            FriendlyByteBuf dataBuffer = new FriendlyByteBuf(Unpooled.buffer());
+            buf.readBytes(dataBuffer, buf.readableBytes());
+            return new PluginMessagePacket(resource, dataBuffer);
+        }
     }
 }

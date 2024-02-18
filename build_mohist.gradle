@@ -157,9 +157,7 @@ dependencies {
     
 	}
     
-    
         implementation 'com.google.inject:guice:5.1.0'
-        annotationProcessor 'com.google.inject:guice:5.0.1'
         
 }
 configurations.runtimeClasspath {
@@ -167,6 +165,7 @@ exclude group: 'io.netty'
 
 
 }
+
 patcher {
     excs.from file("$rootDir/src/main/resources/forge.exc")
     parent = project(':mcp')
@@ -612,14 +611,16 @@ tasks.named('universalJar').configure {
     duplicatesStrategy = 'exclude'
     exclude '.cache'
     from(zipTree('libs/core.jar')){
+    	include '**$**.class'
+    	include '**'
     	exclude 'org/slf4j/**'
-        exclude 'io/netty/**'
         exclude 'com/google/gson/**'
         exclude 'com/google/common/**'
         exclude 'it/unimi/dsi/**'
         //exclude 'net/kyori/**'
         exclude 'it/unimi/**'
-        exclude 'net/jodah/**'
+        //exclude 'net/jodah/**'
+        //include 'com/fasterxml/jackson/**'
         
     }
     from(zipTree('libs/flcore.jar')){
@@ -635,6 +636,9 @@ tasks.named('universalJar').configure {
         exclude 'javax/lang/**'
         exclude 'javax/annotation/**'
         exclude 'javax/tools/**'
+        exclude 'org/objectweb/**'
+        exclude 'org/geysermc/configutils/config/ConfigLoader.class'
+        rename ('config.yml','flconfig.yml')
         
     }
     from(zipTree('libs/netty-common.jar')){
@@ -691,11 +695,11 @@ tasks.named('universalJar').configure {
                 'Implementation-Vendor' : 'SpigotMC'
         ] as LinkedHashMap, 'org/bukkit/craftbukkit/v1_20_R3/')
     }
-    exclude '**/com/google/code/gson/**'
-    exclude '**/com/google/guava/**'
-    exclude '**/com/google/thirdparty/**'
+    exclude '/com/google/code/gson/**'
+    exclude '/com/google/guava/**'
+    exclude '/com/google/thirdparty/**'
     //exclude '**/net/kyori/adventure/**'
-    exclude '**/net/kyori/adventure/text/serializer/gson/**'
+    //exclude '**/net/kyori/adventure/text/serializer/gson/**'
     jarSigner.sign(it)
 }
 

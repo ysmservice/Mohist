@@ -3,6 +3,7 @@ package org.geysermc.floodgate.util;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.arguments.GameProfileArgument;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.players.GameProfileCache;
 import net.minecraft.server.players.UserWhiteListEntry;
 import net.minecraft.world.entity.player.Player;
@@ -14,20 +15,29 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.geysermc.floodgate.MinecraftServerHolder;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.logger.FloodgateLogger;
+import org.geysermc.floodgate.module.ForgeCommandModule;
 import org.geysermc.floodgate.platform.command.CommandUtil;
 import org.geysermc.floodgate.player.UserAudience;
 
 import java.util.*;
 
 public final class ForgeCommandUtil extends CommandUtil {
-    private final FloodgateLogger logger;
 
-    public ForgeCommandUtil(LanguageManager manager, FloodgateApi api, FloodgateLogger logger) {
+    private MinecraftServer server;
+
+    public ForgeCommandUtil(LanguageManager manager, MinecraftServer server, FloodgateApi api) {
         super(manager, api);
-        this.logger = logger;
+        this.server = server;
+        ForgeCommandModule.cmdutil = this;
     }
 
-    @Override
+    public ForgeCommandUtil(LanguageManager manager, FloodgateApi api, FloodgateLogger logger) {
+		// TODO Auto-generated constructor stub
+    	super(manager, api);
+    	ForgeCommandModule.cmdutil = this;
+	}
+
+	@Override
     public UserAudience getUserAudience(final @NonNull Object sourceObj) {
         if (!(sourceObj instanceof Player source)) {
             throw new IllegalArgumentException();

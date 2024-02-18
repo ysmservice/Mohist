@@ -8,6 +8,14 @@ pluginManagement {
         maven { url = 'https://maven.mohistmc.com/' }
         maven { url = 'https://maven.izzel.io/releases' }
         maven { url = 'https://repo.extendedclip.com/content/repositories/placeholderapi' }
+        maven { url = 'https://spongepowered.org/maven/'}
+    }
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == 'org.spongepowered.mixin') {
+                useModule('org.spongepowered:mixingradle:0.8.5')
+            }
+        }
     }
 }
 

@@ -68,7 +68,7 @@ public class Main {
                     System.out.println("Missing required library: " + entry.path);
                     failed = true;
                 }
-                if (!target.getAbsolutePath().contains("netty-common") && !target.getAbsolutePath().contains("netty-buffer")) {
+                if (!target.getAbsolutePath().contains("netty-common") && !target.getAbsolutePath().contains("netty-buffer") && !target.getAbsolutePath().contains("netty-")) {
                 	classpath.append(File.pathSeparator).append(target.getAbsolutePath());
                     URL url = target.toURI().toURL();
                     if (DEBUG)

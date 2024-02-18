@@ -12,7 +12,7 @@ import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
 import org.geysermc.floodgate.MinecraftServerHolder;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
 import org.geysermc.floodgate.skin.SkinApplier;
-import org.geysermc.floodgate.skin.SkinData;
+import org.geysermc.floodgate.api.event.skin.SkinApplyEvent.SkinData;
 
 import java.util.Collections;
 
@@ -33,7 +33,7 @@ public final class ForgeSkinApplier implements SkinApplier {
             PropertyMap properties = bedrockPlayer.getGameProfile().getProperties();
 
             properties.removeAll("textures");
-            properties.put("textures", new Property("textures", skinData.getValue(), skinData.getSignature()));
+            properties.put("textures", new Property("textures", skinData.value(), skinData.signature()));
 
             // Skin is applied - now it's time to refresh the player for everyone.
             for (ServerPlayer otherPlayer : server.getPlayerList().getPlayers()) {
