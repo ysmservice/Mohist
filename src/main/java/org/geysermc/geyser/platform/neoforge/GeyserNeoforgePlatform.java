@@ -25,6 +25,7 @@
 
 package org.geysermc.geyser.platform.neoforge;
 
+
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.loading.FMLPaths;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -62,7 +63,9 @@ public class GeyserNeoforgePlatform implements GeyserModPlatform {
 
     @Override
     public boolean testFloodgatePluginPresent(@NonNull GeyserModBootstrap bootstrap) {
-        return true; // No Floodgate plugin for Forge yet
+        Path floodgateDataFolder = FMLPaths.CONFIGDIR.get().resolve("floodgate");
+        bootstrap.getGeyserConfig().loadFloodgate(bootstrap, floodgateDataFolder);
+        return true;
     }
 
     @Override
