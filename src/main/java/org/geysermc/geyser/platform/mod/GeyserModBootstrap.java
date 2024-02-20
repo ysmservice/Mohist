@@ -33,6 +33,8 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.event.RegisterCommandsEvent;
+
 import org.apache.logging.log4j.LogManager;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -70,7 +72,7 @@ public abstract class GeyserModBootstrap implements GeyserBootstrap {
     @Setter
     private boolean reloading;
 
-    private GeyserImpl geyser;
+    private static GeyserImpl geyser;
     private Path dataFolder;
     private MinecraftServer server;
 
@@ -154,6 +156,8 @@ public abstract class GeyserModBootstrap implements GeyserBootstrap {
         this.geyserInjector = new GeyserModInjector(server, this.platform);
         this.geyserInjector.initializeLocalChannel(this);
 
+    }
+    public static void registcommands(RegisterCommandsEvent event) {
         // Start command building
         // Set just "geyser" as the help command
         GeyserModCommandExecutor helpExecutor = new GeyserModCommandExecutor(geyser,
@@ -172,7 +176,7 @@ public abstract class GeyserModBootstrap implements GeyserBootstrap {
                             .executes(context -> executor.runWithArgs(context, StringArgumentType.getString(context, "args")))
                             .requires(executor::testPermission)));
         }
-        server.getCommands().getDispatcher().register(builder);
+        event.getDispatcher().register(builder);
 
         // Register extension commands
         for (Map.Entry<Extension, Map<String, Command>> extensionMapEntry : geyser.commandManager().extensionCommands().entrySet()) {
@@ -195,7 +199,7 @@ public abstract class GeyserModBootstrap implements GeyserBootstrap {
                                 .executes(context -> executor.runWithArgs(context, StringArgumentType.getString(context, "args")))
                                 .requires(executor::testPermission)));
             }
-            server.getCommands().getDispatcher().register(extCmdBuilder);
+            event.getDispatcher().register(extCmdBuilder);
         }
     }
 

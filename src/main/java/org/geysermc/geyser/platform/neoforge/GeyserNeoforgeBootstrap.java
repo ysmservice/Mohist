@@ -31,9 +31,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.geysermc.geyser.platform.mod.GeyserModBootstrap;
 import org.geysermc.geyser.platform.mod.GeyserModUpdateListener;
@@ -84,5 +87,10 @@ public class GeyserNeoforgeBootstrap extends GeyserModBootstrap {
     @Override
     public boolean hasPermission(@NonNull CommandSourceStack source, @NonNull String permissionNode, int permissionLevel) {
         return this.permissionHandler.hasPermission(source, permissionNode, permissionLevel);
+    }
+    @SubscribeEvent
+    public static void onRegisterCommands(RegisterCommandsEvent event) {
+        // コマンドを登録する
+    	GeyserNeoforgeBootstrap.registcommands(event);
     }
 }
