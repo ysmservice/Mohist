@@ -145,7 +145,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
     //installer 'com.google.code.gson:gson:2.10.1'
     //installer 'com.google.guava:guava:32.1.2-jre'
-    implementation files("libs/core.jar")
+    implementation files("../../libs/core.jar")
 	implementation("org.geysermc.floodgate:core:${project.mod_version}") {
     exclude group: 'com.google.code.gson'
     exclude group: 'com.google.guava'
@@ -157,7 +157,7 @@ dependencies {
     
 	}
     
-        implementation 'com.google.inject:guice:5.1.0'
+    implementation 'com.google.inject:guice:5.1.0'
         
 }
 configurations.runtimeClasspath {
@@ -610,7 +610,7 @@ tasks.named('universalJar').configure {
     from(EXTRA_TXTS)
     duplicatesStrategy = 'exclude'
     exclude '.cache'
-    from(zipTree('libs/core.jar')){
+    from(zipTree('../../libs/core.jar')){
     	include '**$**.class'
     	include '**'
     	exclude 'org/slf4j/**'
@@ -623,7 +623,7 @@ tasks.named('universalJar').configure {
         //include 'com/fasterxml/jackson/**'
         
     }
-    from(zipTree('libs/flcore.jar')){
+    from(zipTree('../../libs/flcore.jar')){
     	exclude 'org/slf4j/**'
         exclude 'io/netty/**'
         exclude 'com/google/gson/**'
@@ -641,7 +641,7 @@ tasks.named('universalJar').configure {
         rename ('config.yml','flconfig.yml')
         
     }
-    from(zipTree('libs/netty-common.jar')){
+    from(zipTree('../../libs/netty-common.jar')){
     	exclude 'org/slf4j/**'
         exclude 'com/google/gson/**'
         exclude 'com/google/common/**'
@@ -651,7 +651,7 @@ tasks.named('universalJar').configure {
         exclude 'net/jodah/**'
         
     }
-    from(zipTree('libs/netty-buffer.jar')){
+    from(zipTree('../../libs/netty-buffer.jar')){
     	exclude 'org/slf4j/**'
         exclude 'com/google/gson/**'
         exclude 'com/google/common/**'
